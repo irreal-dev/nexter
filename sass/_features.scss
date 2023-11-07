@@ -1,0 +1,54 @@
+// QUE HACEN Y COMO LO HACEN 
+
+.features {
+    grid-column: center-start / center-end;
+    margin: 15rem 0;
+
+    display: grid;
+
+    //Creamos 3 columnas con 1fr cada una pero no sera responsive
+    //grid-template-columns: repeat(3, 1fr);
+
+    //Para hacerlo resposive usamos auto-fit y maxmin(function)
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr)) ;
+
+
+    //Para las filas no tendriamos que hacer nada lo va hacer automatico en una grid implicita
+    //grid-template-rows: auto auto;
+    grid-gap: 6rem;
+
+    /* Recordemos que por defecto es strech, para evitar problemas en parrafos mas cortos o largos lo ponemos en start */
+    align-items: start;
+}
+
+
+/* Este es un componente Nuevo, totalmente reusable ,es totalmente independiente de .features, pero lo colocamos aqui por comodidad y opor que si guardan relacion */
+.feature {
+
+    display: grid;
+
+    /* la primera columna contiene el icono, podemos poner 4.5rem, auto, pero vamos a usar min-content*/
+    grid-template-columns: min-content 1fr;
+    
+    /* grid-column-gap: 2.5rem;
+    grid-row-gap: 1.5rem;  Estas propiedades estan en desuso ahora se usan las que estan debajo*/
+    column-gap: 2.5rem;
+    row-gap: 1.5rem;
+
+    &__icon{
+        fill: $color-primary;
+        width: 4.5rem;
+        height: 4.5rem;
+        grid-row: 1 / span 2; //como no hemos definido filas no podemos poner -1, por que no funciona con grid implicito
+
+        //para subir el icono un poco hacia arriba
+        transform: translateY(-1rem);
+
+    }
+
+    &__text{
+        font-size: 1.7rem;
+    }
+}
+
+//el heading-4 lo editamos en _typgraphy.scss

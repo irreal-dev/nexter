@@ -1,0 +1,105 @@
+//HEADER
+
+.header {
+    background-color: $color-grey-dark-1;
+    grid-column: full-start / col-end 6;
+
+    background-image: linear-gradient(rgba($color-secondary, .93),rgba($color-secondary, .93)),url(../img/hero.jpeg);
+    background-size: cover;
+    background-position: center;
+    padding: 8rem;
+    padding-top: 4rem;
+
+    display: grid;
+    
+    // CORRECCION RESPONSIVE ORIGINAL LEEME
+   /*  //Recordemos que definimos el 80% del height en el .container 80vh
+    // Logo 1 fr / h3 mincontent / H1 6rem / Boton 1fr / Las otras dos son Implicitas 
+    grid-template-rows: 1fr min-content 6rem 1fr; */
+
+    // CORRECCION RESPONSIVE
+    grid-template-rows: 1fr min-content minmax(6rem, min-content) 1fr;
+
+    // CORRECCION RESPONSIVE ORIGINAL
+    /* //La unica columna esta ocupando todo el espacio posible, para cambiarlo:
+    grid-template-columns: max-content; */
+
+    // CORRECCION RESPONSIVE
+    grid-template-columns: minmax(min-content, max-content); //La columna nunca debe ser mas estrecha que el contenido
+
+    //para centrar todo el contendido usamos:
+    justify-content: center;   
+    row-gap: 1.5rem;
+
+    // MEDIA PARA CAMBIAR la DISPOSICION DE COLUMNAS EN EL HEADER Y PODER COLOCAR LOS REALRTOS
+    @media only screen and (max-width: $bp-medium) {
+        /* Cambiamos esto -> grid-column: full-start / col-end 6; */
+        grid-column: 1 / -1;               
+    }
+
+    // MEDIA PARA CAMBIAR EL PADDING DEL HEADER
+    @media only screen and (max-width: $bp-small) {
+          padding: 5rem;             
+    }
+
+
+    &__logo {
+        height: 3rem;
+        justify-self: center;
+    }
+
+    &__btn {
+        align-self: start;
+        justify-self: start;
+    }
+
+    &__seenon-text {
+
+        //VAMOS A APLICAR GRID EN EL TEXTO DE ESTE DIV
+        display: grid;
+
+        /* Por defecto dispone a los elementos en rows, pero queremos 3 columnas */
+        grid-template-columns: 1fr max-content 1fr;
+        column-gap: 1.5rem;
+        align-items: center;
+
+        font-size: 1.6rem;
+        color: $color-grey-light-2;   
+
+        //Definimos las lineas 
+        &::before,
+        &::after  {
+            content: "";
+            height: 1px;
+            display: block;
+            background-color: currentColor; // coje el color del padre __seenon-text
+        }
+    }
+
+    &__seenon-logos {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-column-gap: 3rem;
+        justify-items: center;
+        align-items: center;
+
+
+        // CORRECCION RESPONSIVE ORIGINAL
+        /* img { // no le hemos puesto clase, la seleccionamos directamente
+            height: 2.5rem; // para que todos los logos tengan la misma altura
+            filter: brightness(70%);
+
+        } */
+
+        // CORRECCION RESPONSIVE
+        img { 
+            max-height: 2.5rem; // le dice que va a ser de 2.5rem pero tambien puede ser menor
+            max-width: 100%; // si este parametro no escalaria apropiadamente / 100% pero puede ser menor
+            filter: brightness(70%);
+
+        }
+        
+    }
+
+
+}

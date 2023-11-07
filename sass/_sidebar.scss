@@ -1,0 +1,66 @@
+// BARRA LATERAL MENU
+
+.sidebar {
+    background-color: $color-primary;
+
+    // Definimos su posicon en la columna
+    grid-column: sidebar-sart / sidebar-end;
+
+    //Definimos su posicion en las filas
+    grid-row: 1 / -1; // de la 1 al final (-1)
+
+    //Para centrar el boton del sidebar
+    display: flex;
+    justify-content: center;
+
+
+    // MEDIA PARA TERMINAR DE CAMBIAR EL SIDEBAR DE POSICION
+    @media only screen and (max-width: $bp-large) {
+        //Cambiamos la sidebar de posicion en columnas
+        grid-column: 1 / -1;
+
+        //Cambiamos la sidebar de posicion en filas
+        grid-row: 1 / 2;
+
+        //Para desplazar las barras del menu
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+}
+
+.nav-btn {
+    border: none;
+    border-radius: 0;
+    
+    background-color: #fff;
+    height: 2px;
+    width: 4.5rem;
+    margin-top: 4rem;
+
+    
+
+
+    &::after,
+    &::before {
+        background-color: #fff;
+        height: 2px;
+        width: 4.5rem;
+        content: "";
+        display: block;
+
+    }
+
+    &::before { transform: translateY(-1.5rem); }
+    &::after { transform: translateY(1.3rem); }
+
+    // MEDIA PARA TERMINAR DE CAMBIAR LA BOTONERA DEL SIDEBAR
+    @media only screen and (max-width: $bp-large) {
+        //Formateamos el menu
+        margin-top: 0;
+        margin-right: 3rem;
+
+        &::before { transform: translateY(-1.2rem); }
+        &::after { transform: translateY(1rem); }
+    }
+}

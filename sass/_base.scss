@@ -1,0 +1,122 @@
+// COLOR VARIABLES
+$color-primary: #c69963;
+$color-primary-dark: #B28451;
+
+$color-secondary: #101d2c;
+
+$color-grey-light-1: #f9f7f6;
+$color-grey-light-2: #aaa;
+
+$color-grey-dark-1: #54483A;
+$color-grey-dark-2: #6D5D4B;
+
+// FONT VARIABLES
+$font-primary: 'Nunito', sans-serif;
+$font-display: 'Josefin Sans', sans-serif;
+
+
+//RESPONSIVE BREAKPOINTS
+$bp-largest: 75em;  // 1200px/16 = 75 -> PUNTO RUPTURA EN 1200px 
+$bp-large: 62.5em; // 1000px/16 = 62.5 -> PUNTO RUPTURA EN 1000px
+$bp-medium: 50em; // 800px/16 = 50 -> PUNTO RUPTURA EN 800px
+$bp-small: 37.5em; // 600px/16 = 37.5 -> PUNTO RUPTURA EN 600px
+
+// NOTA!!!
+// grid-template: columns / rows  -> para expecificarlas con una solo comando
+
+
+
+// AJUSTES UNIVERSALES
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit; // lo metemos en el html  
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%; //10px/16px = 62.5% 1rem -> 1rem = 10 px 
+
+    // MEDIA PARA REDUCIR EL TAMANO DE FUENTE BASE
+    @media only screen and (max-width: $bp-largest) {
+        font-size: 50%;
+    }
+}
+
+body {
+    font-family: $font-primary;
+    color: $color-grey-dark-2;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+//NUESTRO CONTENEDOR GENERAL QUE ABARCA TODOS LOS ELEMENTOS DE LA LANDING PAGE
+.container {
+    display: grid;
+
+    //ESTABLECEMOS EL TEMPLATE DE LAS FILAS
+    /* EXPLICACION:*/
+    /* la primera fila esta compuesta por el header y los agentes inmoviliarios ocupa un 80vh (80% de la altura del viewport) */
+    /* La segunda fila es el que hacemos nos interesa que se adapte a la altura de su contenido y al borwser de forma resposiv asi que le decimos min-content */
+    /* La tercera fila son las opiniones que van a ocupar un 40vw (40% de la anchura del viewport) recodemos que esta fila esta compuesta por un bloque de imagen y el de texto (80%) */
+    /* Las tres ultimas filas tambien nos interesa que se adapten a la altura de su contenido y al tamano de pantalla, usamos min content para las 3, con esta orden: repeat(3, min-content) */
+    /* NOTA: Es inportante usar vh y vw sobre todo en las filas, muy resposive*/
+      
+    grid-template-rows: 80vh min-content 40vw repeat(3, min-content);
+
+    //ESTABLECEMOS EL TEMPLATE DE LAS COLUMNAS
+    /* EXPLICACION:*/
+    /* La primera columna seria el sidebar la barra lateral del menu con un tamano de 8rem */
+    // NOTA:queremos que nuestras 8 columas esten centradas entre el sidebar y el final de la pagina
+
+    /* Para lograrlo hacemos lo siguiente anadimos una columna nueva depues del sidebar 1fr y otra al final 1fr (y que ocpuen el espacio restante, seran las primeras en comenzar a estrecharse)
+    para hacerlo mas resposive --- > minmax(6rem,1fr) con esto evitaremos que estas columnas se estrechen tanto que desaparezcan
+
+    //EXPLICACION 
+    /* Estas columnas de --- minmax(6rem,1fr)--- las utilizaremos tambien para hacer full-bleed-sections, sangrados (secciones que ocupan mas que nuestras 8 columnas principales) */
+    /* minmax(6rem,1fr) --> queremos estos sangrados entre los 6rem y 1fr, nunca sera menor de 6rem = 60px , aseguramos asi que siempre haya un margen entre el contenido y el final de la pagina*/
+
+    
+    // tomamos 1140 px como una especie de estandar y lo dividimos entre 8 columnas 1140/8 = 142.5px ->14rem
+    // Queremos que sea super responsiv asi que aplicamos la mixmax(funtion)
+    /* EXPLICACION MIXMAX FUNCTION: (8, minmax(min-content, 14rem)); estas 8 columnas podran ser menores de 14rem PERO NUNCA podran ser menores de su min-content*/
+    // NOTA: si no hubieramos tenido este sidebar podriamos haber usado el truco de margin: 0 auto, o la propiedad justify content center
+
+    grid-template-columns: [sidebar-sart] 8rem [sidebar-end full-start] minmax(6rem,1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem)[col-end]) [center-end] minmax(6rem,1fr) [full-end];
+
+
+    /* EXPLICACION DE LOS NOMBRES
+
+        Primero explicar que hemos nombrado las columnas y no las filas, por que en este tipo de layaut, para situar los elementos, nos vamos a bastar mas en las columnas
+
+        [sidebar-sart] -> donde empieza el sidebar 
+        [sidebar-end full-start] -> donde termina el sidebar y empieza el area de sangrado 1fr
+        [center-start] -> el comienzo de nuestro grid 8 columnas
+
+        [col-start] -> Nombramos estas columnas, el objetivo de esto es crear 8 col-start (col-start one, two, three...)  
+        [col-end] -> Marcamos donde acaban, el objetivo de esto es crear 8 col-end (col-end one, two, three...)
+
+        [center-end] -> el final de nuestro grid 8 columnas
+        [full-end] -> donde acaba nuestra area de sangrado 1fr
+    */
+
+
+    // MEDIA PARA CAMBIAR EL SIDEBAR DE POSICION
+    @media only screen and (max-width: $bp-large) {
+        // Anadimos una nueva fila
+        grid-template-rows: /* ->FILA NUEVA DE 6rem para posicionar el sidebar */6rem 80vh min-content 40vw repeat(3, min-content);
+
+        //Borramos la primera columna
+        grid-template-columns: /* [sidebar-sart] 8rem */ [/* sidebar-end */ full-start] minmax(6rem,1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem)[col-end]) [center-end] minmax(6rem,1fr) [full-end];
+    }
+
+    // MEDIA PARA CAMBIAR REALTORS DE POSICION Y HACER QUE EL H1 OCUPE EL 100%
+    @media only screen and (max-width: $bp-medium) {
+        // Anadimos una nueva fila al Header
+        grid-template-rows: 6rem /* queremos que ocupe todo el viewport */ calc(100vh - 6rem); /* El resto de las rows tendran el tamano segun su contenido */        
+    }
+
+   
+}   

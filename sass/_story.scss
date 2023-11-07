@@ -1,0 +1,90 @@
+//OPINIONES PICTURES Y TEXTO
+
+.story {
+
+    //PARTE IMAGEN
+    &__pictures {
+        background-color: $color-primary;
+        grid-column: full-start / col-end 4;
+        background-image: linear-gradient(rgba($color-primary, .5), rgba($color-primary, .5)), url(../img/back.jpg);
+        background-size: cover;
+
+        display: grid;
+
+        /* Creamos un grid de 6 filas 6 columnas
+            para que la imagen ocupe 4 columnas y los 
+            margenes laterales sean de una columna */
+
+        grid-template-rows: repeat(6, 1fr);
+        grid-template-columns: repeat(6, 1fr);
+        align-items: center;
+
+        // MEDIA PARA COLOCAR LOS IMAGENES EN UNA SOLA FILA
+        @media only screen and (max-width: $bp-medium) {
+            /*Sutituimos esto grid-column: full-start / col-end 4; */
+            grid-column: 1 / -1;
+            padding: 6rem;          
+        }
+    }
+
+    &__img--1 {
+        width: 100%;
+        grid-row: 2 / 6;
+        grid-column: 2 / 6;
+        box-shadow: 0 2rem 5rem rgba(#000, .1 );
+
+        // MEDIA RECOLOCAR LA IMAGEN
+        @media only screen and (max-width: $bp-medium) {
+            grid-column: 1 / 5;
+            grid-row: 1 / -1;                    
+        }
+    }
+
+    &__img--2 {
+        width: 115%; 
+        grid-row: 4 / 6;
+        grid-column: 4 / 7;
+        z-index: 20;
+        box-shadow: 0 2rem 5rem rgba(#000, .2 );
+        
+        // MEDIA RECOLOCAR LA IMAGEN
+        @media only screen and (max-width: $bp-medium) {
+            grid-row: 1 / -1;
+            width: 100%;                     
+        }       
+    }
+
+
+    //PARTE DEL TEXTO
+    &__content {
+        background-color: $color-grey-light-1;
+        grid-column: col-start 5 / full-end;
+
+        padding: 6rem 8vw; // usamos el view width para resposive
+
+        /* //EJEMPLO FLEX para alinear el contenido del padre content
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start; //para que el boton no ocupe toda la caja, por defecto es stretch  */
+
+        display: grid;
+        align-content: center;
+        justify-items: start; //para que el boton no ocupe toda la caja, por defecto es stretch
+
+        // MEDIA PARA COLOCAR LOS TEXTOS EN UNA SOLA FILA
+        @media only screen and (max-width: $bp-medium) {
+            /*Sutituimos esto grid-column: col-start 5 / full-end; */
+            grid-column: 1 / -1;
+
+            //Para que aparezca el texto antes
+            grid-row: 5 /6;           
+        }
+    }
+
+    &__text {
+        font-size: 1.5rem;
+        font-style: italic;
+        margin-bottom: 4rem;
+    }
+}
